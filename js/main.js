@@ -60,28 +60,24 @@ for (var i = 1; i <= 25; i++) {
 }
 
 var fillPhotoTemplate = function (template, photo) {
-
-  var newPhoto = document.querySelector(template).cloneNode(true);
-  console.log(newPhoto.querySelector('.picture__img'));
+  var newPhoto = document.querySelector(template).content.cloneNode(true);
   newPhoto.querySelector('.picture__img').src = photo.url;
   newPhoto.querySelector('.picture__comments').textContent = photo.comments.length;
   newPhoto.querySelector('.picture__likes').textContent = photo.likes;
   return newPhoto;
 };
-console.log(fillPhotoTemplate('#picture'), img[2]);
 
-var fillFragment = function (photos) {
+var fillFragment = function (photos, templateFrom) {
   var fragment = document.createDocumentFragment();
-  var photoTemplate = document.querySelector('#picture');
-
-  for (i = 0; i < photos.length; i++) {
-    fragment.appendChild(fillPhotoTemplate(photoTemplate, photos[i]));
+  for (i = 1; i < photos.length; i++) {
+    fragment.appendChild(fillPhotoTemplate(templateFrom, photos[i]));
   }
   return fragment;
 };
 
-var renderFragment = function (photos) {
-  var fragmentToRender = fillFragment(photos);
-  var fragmentPlace = document.querySelector('.pictures');
+var renderFragment = function (photos, whereTo, templateFrom) {
+  var fragmentToRender = fillFragment(photos, templateFrom);
+  var fragmentPlace = document.querySelector(whereTo);
   fragmentPlace.appendChild(fragmentToRender);
 };
+renderFragment(img, '.pictures', '#picture');
