@@ -1,5 +1,5 @@
 'use strict';
-var PhotoPossibleData = {
+var photoPossibleData = {
   NAME: [
     'Эшлинн Брук',
     'Дженна Хейз',
@@ -30,7 +30,7 @@ var PhotoPossibleData = {
     'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'
   ]
 };
-
+var ESC_KEY = 'Escape';
 var createRandomInteger = function (beginFrom, endOn) {
   return Math.floor(beginFrom + Math.random() * (endOn - (beginFrom - 1)));
 };
@@ -39,16 +39,16 @@ var createPhotoMeta = function (photoNumber) {
   var ammountOfComments = createRandomInteger(1, 4);
   var photoName = {
     url: 'photos/' + photoNumber + '.jpg',
-    description: PhotoPossibleData.PICTURE_DESCRIPTION[createRandomInteger(0, PhotoPossibleData.PICTURE_DESCRIPTION.length - 1)],
+    description: photoPossibleData.PICTURE_DESCRIPTION[createRandomInteger(0, photoPossibleData.PICTURE_DESCRIPTION.length - 1)],
     likes: createRandomInteger(15, 200),
     comments: []
   };
   for (var i = 0; i < ammountOfComments; i++) {
-    var numberOfComment = createRandomInteger(0, PhotoPossibleData.COMMENT_MESSAGE.length - 1);
+    var numberOfComment = createRandomInteger(0, photoPossibleData.COMMENT_MESSAGE.length - 1);
     photoName.comments[i] = {
       avatar: 'img/avatar-' + createRandomInteger(1, 6) + '.svg',
-      COMMENT_MESSAGE: PhotoPossibleData.COMMENT_MESSAGE[numberOfComment],
-      name: PhotoPossibleData.COMMENT_NAME[createRandomInteger(0, PhotoPossibleData.COMMENT_NAME.length - 1)]
+      COMMENT_MESSAGE: photoPossibleData.COMMENT_MESSAGE[numberOfComment],
+      name: photoPossibleData.COMMENT_NAME[createRandomInteger(0, photoPossibleData.COMMENT_NAME.length - 1)]
     };
   }
   return photoName;
@@ -81,3 +81,29 @@ var renderFragment = function (photos, whereTo, templateFrom) {
   fragmentPlace.appendChild(fragmentToRender);
 };
 renderFragment(img, '.pictures', '#picture');
+
+// Работа с загрузкой изображений
+var uploadFile = document.querySelector('#upload-file');
+var body = document.querySelector('body');
+var editPhotoForm = document.querySelector('.img-upload__overlay');
+var buttonPhotoClose = editPhotoForm.querySelector('#upload-cancel');
+
+var closePhoto = function () {
+  body.classList.remove('modal-open');
+  editPhotoForm.classList.add('hidden');
+  uploadFile.value = '';
+};
+
+var openPhoto = function () {
+  body.classList.add('modal-open');
+  editPhotoForm.classList.remove('hidden');
+  body.addEventListener('keydown', function (evt) {
+    if (evt.key === ESC_KEY) {
+      closePhoto();
+    }
+  });
+  buttonPhotoClose.addEventListener('click', closePhoto);
+
+};
+
+uploadFile.addEventListener('change', openPhoto);
