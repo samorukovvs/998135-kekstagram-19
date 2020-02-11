@@ -87,7 +87,13 @@ var uploadFile = document.querySelector('#upload-file');
 var body = document.querySelector('body');
 var editPhotoForm = document.querySelector('.img-upload__overlay');
 var buttonPhotoClose = editPhotoForm.querySelector('#upload-cancel');
+var buttonPhotoSmaller = editPhotoForm.querySelector('.scale__control--smaller');
+var buttonPhotoBigger = editPhotoForm.querySelector('.scale__control--bigger');
+var scaleControl = editPhotoForm.querySelector('.scale__control--value');
+var photoPreview = editPhotoForm.querySelector('.img-upload__preview');
 
+
+// Открытие и закрытие изображения
 var closePhoto = function () {
   body.classList.remove('modal-open');
   editPhotoForm.classList.add('hidden');
@@ -103,7 +109,30 @@ var openPhoto = function () {
     }
   });
   buttonPhotoClose.addEventListener('click', closePhoto);
-
+  scaleControl.value = '100%';
 };
 
 uploadFile.addEventListener('change', openPhoto);
+
+// Работа с масштабом
+var photoScaleValue = 1;
+
+var resizePhotoBigger = function () {
+  if (photoScaleValue < 1) {
+    photoScaleValue += 0.25;
+    scaleControl.value = photoScaleValue * 100 + '%';
+  }
+  photoPreview.style.transform = 'scale(' + photoScaleValue + ')';
+};
+
+var resizePhotoSmaller = function () {
+  if (photoScaleValue > 0.25) {
+    photoScaleValue -= 0.25;
+    scaleControl.value = photoScaleValue * 100 + '%';
+  }
+  photoPreview.style.transform = 'scale(' + photoScaleValue + ')';
+};
+
+buttonPhotoBigger.addEventListener('click', resizePhotoBigger);
+buttonPhotoSmaller.addEventListener('click', resizePhotoSmaller);
+
