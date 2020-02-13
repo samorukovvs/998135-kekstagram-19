@@ -30,6 +30,7 @@ var photoPossibleData = {
     'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'
   ]
 };
+
 var ESC_KEY = 'Escape';
 var createRandomInteger = function (beginFrom, endOn) {
   return Math.floor(beginFrom + Math.random() * (endOn - (beginFrom - 1)));
@@ -132,7 +133,47 @@ var resizePhotoSmaller = function () {
   }
   photoPreview.style.transform = 'scale(' + photoScaleValue + ')';
 };
-
 buttonPhotoBigger.addEventListener('click', resizePhotoBigger);
 buttonPhotoSmaller.addEventListener('click', resizePhotoSmaller);
 
+// Работа с фильтрами
+var currentPhotoEffect = '';
+var effects = document.querySelector('.img-upload__effects');
+var photoEffect = [
+  'effects__preview--none',
+  'effects__preview--chrome',
+  'effects__preview--sepia',
+  'effects__preview--marvin',
+  'effects__preview--phobos',
+  'effects__preview--heat'
+];
+var ammountOfEffects = photoEffect.length;
+
+// var effectNonePreview = effects.querySelector('.' + photoEffect.NONE);
+// var effectChromePreview = effects.querySelector('.' + photoEffect.CHROME);
+// var effectSepiaPreview = effects.querySelector('.' + photoEffect.SEPIA);
+
+
+// NONE: 'effects__preview--none',
+//   CHROME: 'effects__preview--chrome',
+//   SEPIA: 'effects__preview--sepia',
+//   MARVIN: 'effects__preview--marvin',
+//   PHOBOS: 'effects__preview--phobos',
+//   HEAT: 'effects__preview--heat'
+var setPhotoEffect = function (effect) {
+  if (currentPhotoEffect !== '') {
+    photoPreview.classList.remove(currentPhotoEffect);
+  }
+  if (effect !== 'effects__preview--none') {
+    photoPreview.classList.add(effect);
+  }
+  currentPhotoEffect = effect;
+};
+
+var effectPreview = [];
+for (i = 0; i < ammountOfEffects; i++) {
+  effectPreview[i] = effects.querySelector('.' + photoEffect[i]);
+  effectPreview[i].addEventListener('click', function () {
+    setPhotoEffect(photoEffect[i]);
+  });
+}
