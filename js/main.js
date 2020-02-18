@@ -30,7 +30,7 @@ var photoPossibleData = {
     'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'
   ]
 };
-
+var hashtagField = document.querySelector('.text__hashtags');
 var ESC_KEY = 'Escape';
 var createRandomInteger = function (beginFrom, endOn) {
   return Math.floor(beginFrom + Math.random() * (endOn - (beginFrom - 1)));
@@ -93,9 +93,6 @@ var buttonPhotoBigger = editPhotoForm.querySelector('.scale__control--bigger');
 var scaleControl = editPhotoForm.querySelector('.scale__control--value');
 var photoPreview = editPhotoForm.querySelector('.img-upload__preview');
 
-// Добавлено временно, чтобы не открывать каждый раз
-//editPhotoForm.classList.remove('hidden');
-
 // Открытие и закрытие изображения
 var closePhoto = function () {
   body.classList.remove('modal-open');
@@ -107,7 +104,7 @@ var openPhoto = function () {
   body.classList.add('modal-open');
   editPhotoForm.classList.remove('hidden');
   body.addEventListener('keydown', function (evt) {
-    if (evt.key === ESC_KEY) {
+    if (evt.key === ESC_KEY && evt.target !== hashtagField) {
       closePhoto();
     }
   });
@@ -172,6 +169,7 @@ var calculateEffect = function (position, effectName) {
     case 'effects__preview--heat':
       return 'brightness(' + ((position * 2) + 1) + ')';
   }
+  return false;
 };
 // Установка насыщенности эффекта
 var setEffectSaturation = function (value) {
@@ -213,13 +211,16 @@ effectPin.addEventListener('mouseup', function () {
 });
 
 // Валидация хештегов
-var hashtagField = document.querySelector('.text__hashtags');
 var symbolREGEX = /^([#])([a-zA-ZА-Яа-я0-9]{1,19})$/;
 var specSymbol = /^([#])([a-zA-ZА-Яа-я0-9]*)$/;
 
 
 var checkHashtags = function () {
   hashtagField.setCustomValidity('');
+  // Проверка на пустой хештег
+  if (hashtagField.value === '') {
+    return true;
+  }
   var hashtags = hashtagField.value.split(' ');
   // Проверка строки хештегов
   // Смена регистра и сортировка
