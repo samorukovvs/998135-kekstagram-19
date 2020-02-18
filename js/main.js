@@ -94,7 +94,7 @@ var scaleControl = editPhotoForm.querySelector('.scale__control--value');
 var photoPreview = editPhotoForm.querySelector('.img-upload__preview');
 
 // Добавлено временно, чтобы не открывать каждый раз
-editPhotoForm.classList.remove('hidden');
+//editPhotoForm.classList.remove('hidden');
 
 // Открытие и закрытие изображения
 var closePhoto = function () {
@@ -211,3 +211,54 @@ for (i = 0; i < ammountOfEffects; i++) {
 effectPin.addEventListener('mouseup', function () {
   setEffectSaturation(0.5);
 });
+
+// Валидация хештегов
+var hashtagField = document.querySelector('.text__hashtags');
+var symbolREGEX = /^([#])([a-zA-ZА-Яа-я0-9]{1,19})$/;
+var specSymbol = /^([#])([a-zA-ZА-Яа-я0-9]*)$/;
+
+
+var checkHashtags = function () {
+  hashtagField.setCustomValidity('');
+  var hashtags = hashtagField.value.split(' ');
+  // Проверка строки хештегов
+  // Смена регистра и сортировка
+  var sortedHashtags = hashtags.map(function (value) {
+    return value.toLowerCase();
+  }).sort();
+  for (i = 0; i < hashtags.length; i++) {
+    if (sortedHashtags[i] === sortedHashtags[i + 1]) {
+      hashtagField.setCustomValidity('Хештеги не должны повторяться');
+    }
+  }
+  if (hashtags.length > 5) {
+    hashtagField.setCustomValidity('Хештегов должно быть меньше 5');
+  }
+  // Проверка отдельных хэштегов
+  if (hashtagField.validationMessage === '') {
+    for (i = 0; i < hashtags.length; i++) {
+      if (symbolREGEX.test(hashtags[i])) {
+        hashtagField.setCustomValidity('');
+      } else {
+        if (hashtags[i].indexOf('#') !== 0) {
+          hashtagField.setCustomValidity('Хештег должен начинаться с #');
+        }
+
+        if (specSymbol.test(hashtags[i]) !== true) {
+          hashtagField.setCustomValidity('Хештег не может содержать спецсимволы');
+          return false;
+        }
+        if (hashtags[i].length > 19) {
+          hashtagField.setCustomValidity('Хештег должен быть короче 20 символов');
+          return false;
+        }
+        if (hashtags[i] === '#') {
+          hashtagField.setCustomValidity('Хештег не может состоять из одной #');
+          return false;
+        }
+      }
+    }
+  }
+  return true;
+};
+document.querySelector('.img-upload__submit').addEventListener('click', checkHashtags);
