@@ -14,7 +14,7 @@
 
   var fillFragment = function (photos, templateFrom) {
     var fragment = document.createDocumentFragment();
-    for (var i = 1; i < photos.length; i++) {
+    for (var i = 0; i < photos.length; i++) {
       fragment.appendChild(fillPhotoTemplate(templateFrom, photos[i]));
     }
     return fragment;
