@@ -6,7 +6,7 @@
   };
   var TIMEOUT = 1000;
 
-  window.download = function (onSuccess, onError) {
+  window.request = function (onSuccess, onError) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
 
@@ -30,12 +30,11 @@
     xhr.send();
   };
   var successHandler = function (img) {
-
     window.utils.renderFragment(img, '.pictures', '#picture');
   };
 
   var errorHandler = function (message) {
     console.log(message);
   };
-  window.download(successHandler, errorHandler);
+  window.request(successHandler, errorHandler);
 })();
