@@ -4,31 +4,19 @@
     return Math.floor(beginFrom + Math.random() * (endOn - (beginFrom - 1)));
   };
 
-  var fillPhotoTemplate = function (template, photo) {
-    var newPhoto = document.querySelector(template).content.cloneNode(true);
-    newPhoto.querySelector('.picture__img').src = photo.url;
-    newPhoto.querySelector('.picture__comments').textContent = photo.comments.length;
-    newPhoto.querySelector('.picture__likes').textContent = photo.likes;
-    return newPhoto;
-  };
-
-  var fillFragment = function (photos, templateFrom) {
-    var fragment = document.createDocumentFragment();
-    for (var i = 0; i < photos.length; i++) {
-      fragment.appendChild(fillPhotoTemplate(templateFrom, photos[i]));
+  var createRandomArray = function (beginFrom, endOn, length) {
+    var randomArray = [];
+    while (randomArray.length < length) {
+      var randomInteger = createRandomInteger(beginFrom, endOn);
+      if (!randomArray.includes(randomInteger)) {
+        randomArray.push(randomInteger);
+      }
     }
-    return fragment;
+    return randomArray;
   };
-
-  var renderFragment = function (photos, whereTo, templateFrom) {
-    var fragmentToRender = fillFragment(photos, templateFrom);
-    var fragmentPlace = document.querySelector(whereTo);
-    fragmentPlace.appendChild(fragmentToRender);
-  };
-
   window.utils = {
     createRandomInteger: createRandomInteger,
-    renderFragment: renderFragment,
+    createRandomArray: createRandomArray,
     ESC_KEY: 'Escape'
   };
 })();

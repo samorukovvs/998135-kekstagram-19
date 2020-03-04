@@ -29,8 +29,12 @@
     xhr.open('GET', URL);
     xhr.send();
   };
+
+  window.photosMeta = [];
   var successHandler = function (img) {
-    window.utils.renderFragment(img, '.pictures', '#picture');
+    window.photosMeta = img.slice();
+    window.gallery.renderGallery(img, '.pictures', '#picture', window.gallery.DEFAULT_GALLERY_SIZE);
+    window.gallery.enableFilter();
   };
 
   var errorHandler = function (message) {
