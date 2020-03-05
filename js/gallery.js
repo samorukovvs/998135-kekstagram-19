@@ -2,6 +2,8 @@
 (function () {
   var DEFAULT_GALLERY_SIZE = 25;
   var RANDOM_GALLERY_SIZE = 10;
+  var DEBOUNCE_TIMEOUT = 1000;
+  ;
   var imgFilter = document.querySelector('.img-filters');
   var defaultSortButton = document.querySelector('#filter-default');
   var randomSortButton = document.querySelector('#filter-random');
@@ -23,11 +25,17 @@
     }
     return fragment;
   };
-
+  var timoutId;
   var renderGallery = function (photos, whereTo, templateFrom, ammountOfImages) {
-    var fragmentToRender = fillFragment(photos, templateFrom, ammountOfImages);
-    var fragmentPlace = document.querySelector(whereTo);
-    fragmentPlace.appendChild(fragmentToRender);
+
+    if(timoutId){
+      window.clearTimeout(timoutId);
+    }
+    timoutId = window.setTimeout(function (){
+      var fragmentToRender = fillFragment(photos, templateFrom, ammountOfImages);
+      var fragmentPlace = document.querySelector(whereTo);
+      fragmentPlace.appendChild(fragmentToRender);
+    }, DEBOUNCE_TIMEOUT);
   };
 
   var renderRandomGallery = function() {
@@ -68,6 +76,7 @@
   };
 
   defaultSortButton.addEventListener('click',  function() {
+    removeGallery();
     makeButtonActive(defaultSortButton);
     renderGallery(window.photosMeta, '.pictures', '#picture', DEFAULT_GALLERY_SIZE);
   });
