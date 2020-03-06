@@ -29,12 +29,24 @@
     xhr.open('GET', URL);
     xhr.send();
   };
+
+  window.photosMeta = [];
   var successHandler = function (img) {
-    window.utils.renderFragment(img, '.pictures', '#picture');
+    window.photosMeta = img.slice();
+    window.gallery.renderGallery(img, '.pictures', '#picture', window.gallery.DEFAULT_GALLERY_SIZE);
+    window.gallery.enableFilter();
   };
 
   var errorHandler = function (message) {
-    console.log(message);
+    var node = document.createElement('div');
+    node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: red;';
+    node.style.position = 'absolute';
+    node.style.left = 0;
+    node.style.right = 0;
+    node.style.fontSize = '20px';
+
+    node.textContent = message;
+    document.body.insertAdjacentElement('afterbegin', node);
   };
   window.request(successHandler, errorHandler);
 })();
