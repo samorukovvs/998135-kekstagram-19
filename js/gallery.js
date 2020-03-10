@@ -25,7 +25,7 @@
     return fragment;
   };
   var timoutId;
-  var renderGallery = function (photos, whereTo, templateFrom, ammountOfImages) {
+  var renderGallery = function (photos, whereTo, templateFrom, ammountOfImages, cb) {
 
     if (timoutId) {
       window.clearTimeout(timoutId);
@@ -34,6 +34,7 @@
       var fragmentToRender = fillFragment(photos, templateFrom, ammountOfImages);
       var fragmentPlace = document.querySelector(whereTo);
       fragmentPlace.appendChild(fragmentToRender);
+      cb();
     }, DEBOUNCE_TIMEOUT);
   };
 
@@ -43,7 +44,7 @@
     for (var i = 0; i < randomPicturesIndex.length; i++) {
       randomPictures.push(window.photosMeta[randomPicturesIndex[i]]);
     }
-    window.gallery.renderGallery(randomPictures, '.pictures', '#picture', RANDOM_GALLERY_SIZE);
+    window.gallery.renderGallery(randomPictures, '.pictures', '#picture', RANDOM_GALLERY_SIZE, window.photoView.findPictures);
   };
 
   var renderDiscussedGallery = function () {
@@ -58,7 +59,7 @@
         return 0;
       }
     });
-    window.gallery.renderGallery(discussedPictures, '.pictures', '#picture', DEFAULT_GALLERY_SIZE);
+    window.gallery.renderGallery(discussedPictures, '.pictures', '#picture', DEFAULT_GALLERY_SIZE, window.photoView.findPictures);
   };
 
   var removeGallery = function () {
@@ -79,7 +80,7 @@
   defaultSortButton.addEventListener('click', function () {
     removeGallery();
     makeButtonActive(defaultSortButton);
-    renderGallery(window.photosMeta, '.pictures', '#picture', DEFAULT_GALLERY_SIZE);
+    renderGallery(window.photosMeta, '.pictures', '#picture', DEFAULT_GALLERY_SIZE, window.photoView.findPictures);
   });
 
   randomSortButton.addEventListener('click', function () {

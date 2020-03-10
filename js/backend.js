@@ -33,7 +33,7 @@
   window.photosMeta = [];
   var successHandler = function (img) {
     window.photosMeta = img.slice();
-    window.gallery.renderGallery(img, '.pictures', '#picture', window.gallery.DEFAULT_GALLERY_SIZE);
+    window.gallery.renderGallery(img, '.pictures', '#picture', window.gallery.DEFAULT_GALLERY_SIZE, window.photoView.findPictures);
     window.gallery.enableFilter();
   };
 
@@ -49,4 +49,5 @@
     document.body.insertAdjacentElement('afterbegin', node);
   };
   window.request(successHandler, errorHandler);
+
 })();
