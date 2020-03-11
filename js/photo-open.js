@@ -10,7 +10,7 @@
     if (evt.key === window.utils.ESC_KEY && evt.target !== hashtagField) {
       closePhoto();
     }
-  }
+  };
 
   var closePhoto = function () {
     body.classList.remove('modal-open');
