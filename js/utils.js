@@ -17,6 +17,8 @@
   window.utils = {
     createRandomInteger: createRandomInteger,
     createRandomArray: createRandomArray,
-    ESC_KEY: 'Escape'
+    ESC_KEY: 'Escape',
+    ENTER_KEY: 'Enter'
+
   };
 })();
