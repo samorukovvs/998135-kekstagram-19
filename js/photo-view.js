@@ -8,6 +8,7 @@
       picture.addEventListener('click', function () {
         showBigPicture(picture.attributes.src.value);
       });
+
       picture.parentElement.addEventListener('keydown', function (evt) {
         if (evt.key === window.utils.ENTER_KEY) {
           showBigPicture(picture.attributes.src.value);
@@ -15,7 +16,7 @@
       });
     });
   };
-
+  // Обработчики закрытия изображения
   var closePhoto = function () {
     bigPicture.classList.add('hidden');
     body.classList.remove('modal-open');

@@ -7,6 +7,7 @@
   var effectValue = document.querySelector('.effect-level__value');
   var effectVisualValueDepth = document.querySelector('.effect-level__depth');
   var photoPreview = document.querySelector('.img-upload__preview');
+  var EFFECT_COEFFICIENT = 100;
 
   var photoEffect = [
     'effects__preview--none',
@@ -38,10 +39,10 @@
   };
   // Установка насыщенности эффекта
   var setEffectSaturation = function (value) {
-    effectPin.style.left = (value * 100) + '%';
-    effectVisualValueDepth.style.width = (value * 100) + '%';
-    effectValue.setAttribute('value', (value * 100) + '%');
-    photoPreview.style.filter = calculateEffect(value, currentPhotoEffect);
+    effectPin.style.left = (value) + '%';
+    effectVisualValueDepth.style.width = (value) + '%';
+    effectValue.setAttribute('value', (value) + '%');
+    photoPreview.style.filter = calculateEffect(value / EFFECT_COEFFICIENT, currentPhotoEffect);
   };
   // Выбор эффекта
   var setPhotoEffect = function (effect) {
@@ -60,7 +61,7 @@
         currentPhotoEffect = photoEffect[i];
       }
     }
-    setEffectSaturation(1);
+    setEffectSaturation(0);
   };
   setPhotoEffect('effects__preview--none');
   var effectPreview = [];
@@ -71,7 +72,7 @@
     });
   }
 
-  effectPin.addEventListener('mouseup', function () {
-    setEffectSaturation(0.5);
-  });
+  window.photoEffect = {
+    setEffectSaturation: setEffectSaturation
+  };
 })();
