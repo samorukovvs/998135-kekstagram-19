@@ -1,6 +1,7 @@
 'use strict';
 (function () {
   var URL = 'https://js.dump.academy/kekstagram/data';
+  var UPLOAD_URL = 'https://js.dump.academy/kekstagram';
   var ResponseCode = {
     OK: 200
   };
@@ -50,4 +51,48 @@
   };
   window.request(successHandler, errorHandler);
 
+  // Загрузка данных на сервер
+
+  // Сообщение удачной загрузки
+  var successLoadMessage = function () {
+    var successMessage = document.querySelector('#success').content.cloneNode(true);
+    var mainTag = document.querySelector('main');
+    mainTag.appendChild(successMessage);
+    var successLoadButton = mainTag.querySelector('.success__button');
+    var successLoadWindow = mainTag.querySelector('.success');
+    window.utils.confirmOpened(successLoadWindow, successLoadButton);
+
+  };
+  // Сообщение неудачной загрузки
+  var errorLoadMessage = function () {
+    var errorMessage = document.querySelector('#error').content.cloneNode(true);
+    var mainTag = document.querySelector('main');
+    mainTag.appendChild(errorMessage);
+    var errorLoadButton = mainTag.querySelector('.error__button');
+    var errorLoadWindow = mainTag.querySelector('.error');
+    window.utils.confirmOpened(errorLoadWindow, errorLoadButton);
+  };
+
+  var upload = function (data, onSuccess) {
+    var xhr = new XMLHttpRequest();
+    xhr.responseType = 'json';
+
+    xhr.addEventListener('load', function () {
+      onSuccess(xhr.response);
+
+    });
+
+    xhr.addEventListener('error', function () {
+      window.photoOpen.closePhoto();
+      errorLoadMessage();
+    });
+
+    xhr.open('POST', UPLOAD_URL);
+    xhr.send(data);
+  };
+
+  window.backend = {
+    upload: upload,
+    successLoadMessage: successLoadMessage
+  };
 })();
