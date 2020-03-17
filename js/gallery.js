@@ -2,15 +2,17 @@
 (function () {
   var DEFAULT_GALLERY_SIZE = 25;
   var RANDOM_GALLERY_SIZE = 10;
-  var DEBOUNCE_TIMEOUT = 1000;
+  var DEBOUNCE_TIMEOUT = 500;
   var imgFilter = document.querySelector('.img-filters');
   var defaultSortButton = document.querySelector('#filter-default');
   var randomSortButton = document.querySelector('#filter-random');
   var discussedSortButton = document.querySelector('#filter-discussed');
 
 
-  var fillPhotoTemplate = function (template, photo) {
+  var fillPhotoTemplate = function (template, photo, id) {
     var newPhoto = document.querySelector(template).content.cloneNode(true);
+    newPhoto.querySelector('a').dataset.id = id;
+    photo.id = id;
     newPhoto.querySelector('.picture__img').src = photo.url;
     newPhoto.querySelector('.picture__comments').textContent = photo.comments.length;
     newPhoto.querySelector('.picture__likes').textContent = photo.likes;
@@ -20,12 +22,12 @@
   var fillFragment = function (photos, templateFrom, ammountOfImages) {
     var fragment = document.createDocumentFragment();
     for (var i = 0; i < ammountOfImages; i++) {
-      fragment.appendChild(fillPhotoTemplate(templateFrom, photos[i]));
+      fragment.appendChild(fillPhotoTemplate(templateFrom, photos[i], i));
     }
     return fragment;
   };
   var timoutId;
-  var renderGallery = function (photos, whereTo, templateFrom, ammountOfImages, cb) {
+  var renderGallery = function (photos, whereTo, templateFrom, ammountOfImages, findPictures) {
 
     if (timoutId) {
       window.clearTimeout(timoutId);
@@ -34,7 +36,8 @@
       var fragmentToRender = fillFragment(photos, templateFrom, ammountOfImages);
       var fragmentPlace = document.querySelector(whereTo);
       fragmentPlace.appendChild(fragmentToRender);
-      cb();
+      window.gallery.currentGalleryPhotosMeta = photos.slice();
+      findPictures();
     }, DEBOUNCE_TIMEOUT);
   };
 
@@ -45,6 +48,7 @@
       randomPictures.push(window.photosMeta[randomPicturesIndex[i]]);
     }
     window.gallery.renderGallery(randomPictures, '.pictures', '#picture', RANDOM_GALLERY_SIZE, window.photoView.findPictures);
+
   };
 
   var renderDiscussedGallery = function () {
