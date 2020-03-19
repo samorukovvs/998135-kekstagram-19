@@ -52,6 +52,7 @@
 
     var totalCommentsAmmount = pictureToShow.comments.length;
     var currentAmmountOfComments = 0;
+
     var showMoreComments = function () {
       var i = currentAmmountOfComments;
       if (pictureToShow.comments.length > (currentAmmountOfComments + AMMOUNT_OF_COMMENTS_TO_SHOW)) {
@@ -60,10 +61,22 @@
         ammountOfCommentToShowNow = totalCommentsAmmount - currentAmmountOfComments;
       }
       for (i; i < currentAmmountOfComments + ammountOfCommentToShowNow; i++) {
-        socialComments.insertAdjacentHTML('beforeend', '<li class="social__comment"><img class="social__picture" src="' + pictureToShow.comments[i].avatar + '" alt="' + pictureToShow.comments[i].name + '" width="35" height="35"> <p class="social__text">' + pictureToShow.comments[i].message + '</p></li>');
+        var li = document.createElement('li');
+        var img = document.createElement('img');
+        var p = document.createElement('p');
+        li.classList.add('social__comment');
+        img.classList.add('social__picture');
+        img.setAttribute('src', pictureToShow.comments[i].avatar);
+        img.setAttribute('alt', pictureToShow.comments[i].name);
+        img.style.width = 35;
+        img.style.height = 35;
+        p.classList.add('social__text');
+        p.textContent = pictureToShow.comments[i].message;
+        li.appendChild(img);
+        li.appendChild(p);
+        socialComments.appendChild(li);
       }
-      currentAmmountOfComments = currentAmmountOfComments + ammountOfCommentToShowNow;
-      shownCommentsCounter.innerHTML = currentAmmountOfComments + ' из <span class="comments-count">' + totalCommentsAmmount + '</span> комментариев';
+      currentAmmountOfComments = i;
     };
     showMoreComments();
     commentsLoader.addEventListener('click', showMoreComments);
