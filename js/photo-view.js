@@ -77,6 +77,7 @@
         socialComments.appendChild(li);
       }
       currentAmmountOfComments = i;
+      shownCommentsCounter.innerHTML = currentAmmountOfComments + ' из ' + totalCommentsAmmount + ' комментариев';
     };
     showMoreComments();
     commentsLoader.addEventListener('click', showMoreComments);
