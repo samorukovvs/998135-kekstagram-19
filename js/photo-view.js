@@ -45,12 +45,11 @@
     var socialComments = document.querySelector('.social__comments');
     var commentsLoader = document.querySelector('.comments-loader');
     var shownCommentsCounter = document.querySelector('.social__comment-count');
-    var totalCommentsCounter = document.querySelector('.comments-count');
+
     bigPictureImage.src = pictureToShow.url;
     bigPictureDescription.textContent = pictureToShow.description;
     bigPictureLikes.textContent = pictureToShow.likes;
 
-    shownCommentsCounter.innerHTML = '10 из <span class="comments-count">12</span> комментариев';
     var totalCommentsAmmount = pictureToShow.comments.length;
     var currentAmmountOfComments = 0;
     var showMoreComments = function () {
@@ -68,12 +67,6 @@
     };
     showMoreComments();
     commentsLoader.addEventListener('click', showMoreComments);
-
-  //   for (var i = 0; i < AMMOUNT_OF_COMMENTS_TO_SHOW; i++) {
-  //     console.log(pictureToShow.comments[i]);
-  //     socialComments.insertAdjacentHTML('beforeend', '<li class="social__comment"><img class="social__picture" src="' + pictureToShow.comments[i].avatar + '" alt="' + pictureToShow.comments[i].name + '" width="35" height="35"> <p class="social__text">' + pictureToShow.comments[i].message + '</p></li>');
-  //   }
-
   };
 
   window.photoView = {

@@ -71,8 +71,13 @@
       setPhotoEffect(evt.target.classList.value);
     });
   }
+  var resetPhoto = function () {
+    setEffectSaturation(0);
+    setPhotoEffect('effects__preview--none');
+  };
 
   window.photoEffect = {
+    resetPhoto: resetPhoto,
     setEffectSaturation: setEffectSaturation
   };
 })();

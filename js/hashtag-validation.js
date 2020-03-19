@@ -53,5 +53,8 @@
     return true;
   };
   document.querySelector('.img-upload__submit').addEventListener('click', checkHashtags);
+  if (hashtagField.validationMessage !== '') {
+    hashtagField.style.border = 'red';
+  }
 
 })();

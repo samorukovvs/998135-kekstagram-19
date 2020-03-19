@@ -750,6 +750,11 @@ main {
 
   border-radius: 5px;
 }
+.text__description:invalid,
+.text__hashtags:invalid   {
+  border-color: red;
+  border-width: 3px;
+}
 
 .text__description {
   width: 450px;
