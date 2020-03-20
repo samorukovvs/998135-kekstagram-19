@@ -1,10 +1,8 @@
 'use strict';
 (function () {
+  var SYMBOL_REGEX = /^([#])([a-zA-ZА-Яа-я0-9]{1,19})$/;
+  var SPEC_SYMBOL = /^([#])([a-zA-ZА-Яа-я0-9]*)$/;
   var hashtagField = document.querySelector('.text__hashtags');
-  var symbolREGEX = /^([#])([a-zA-ZА-Яа-я0-9]{1,19})$/;
-  var specSymbol = /^([#])([a-zA-ZА-Яа-я0-9]*)$/;
-
-
   var checkHashtags = function () {
     hashtagField.setCustomValidity('');
     // Проверка на пустой хештег
@@ -28,14 +26,14 @@
     // Проверка отдельных хэштегов
     if (hashtagField.validationMessage === '') {
       for (i = 0; i < hashtags.length; i++) {
-        if (symbolREGEX.test(hashtags[i])) {
+        if (SYMBOL_REGEX.test(hashtags[i])) {
           hashtagField.setCustomValidity('');
         } else {
           if (hashtags[i].indexOf('#') !== 0) {
             hashtagField.setCustomValidity('Хештег должен начинаться с #');
           }
 
-          if (specSymbol.test(hashtags[i]) !== true) {
+          if (SPEC_SYMBOL.test(hashtags[i]) !== true) {
             hashtagField.setCustomValidity('Хештег не может содержать спецсимволы');
             return false;
           }
@@ -53,8 +51,4 @@
     return true;
   };
   document.querySelector('.img-upload__submit').addEventListener('click', checkHashtags);
-  if (hashtagField.validationMessage !== '') {
-    hashtagField.style.border = 'red';
-  }
-
 })();

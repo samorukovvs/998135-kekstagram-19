@@ -1,11 +1,12 @@
 'use strict';
 (function () {
+  var TIMEOUT = 1000;
+
   var URL = 'https://js.dump.academy/kekstagram/data';
   var UPLOAD_URL = 'https://js.dump.academy/kekstagram';
   var ResponseCode = {
     OK: 200
   };
-  var TIMEOUT = 1000;
 
   window.request = function (onSuccess, onError) {
     var xhr = new XMLHttpRequest();

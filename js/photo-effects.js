@@ -1,15 +1,6 @@
 'use strict';
 (function () {
-  var currentPhotoEffect = '';
-  var effects = document.querySelector('.img-upload__effects');
-  var effectsSlider = document.querySelector('.img-upload__effect-level');
-  var effectPin = document.querySelector('.effect-level__pin');
-  var effectValue = document.querySelector('.effect-level__value');
-  var effectVisualValueDepth = document.querySelector('.effect-level__depth');
-  var photoPreview = document.querySelector('.img-upload__preview');
-  var EFFECT_COEFFICIENT = 100;
-
-  var photoEffect = [
+  var PHOTO_EFFECTS = [
     'effects__preview--none',
     'effects__preview--chrome',
     'effects__preview--sepia',
@@ -17,7 +8,17 @@
     'effects__preview--phobos',
     'effects__preview--heat'
   ];
-  var ammountOfEffects = photoEffect.length;
+  var EFFECT_COEFFICIENT = 100;
+
+  var currentPhotoEffect = '';
+  var effects = document.querySelector('.img-upload__effects');
+  var effectsSlider = document.querySelector('.img-upload__effect-level');
+  var effectPin = document.querySelector('.effect-level__pin');
+  var effectValue = document.querySelector('.effect-level__value');
+  var effectVisualValueDepth = document.querySelector('.effect-level__depth');
+  var photoPreview = document.querySelector('.img-upload__preview');
+
+  var ammountOfEffects = PHOTO_EFFECTS.length;
 
   // Рассчет насыщенности эффекта
   var calculateEffect = function (position, effectName) {
@@ -46,33 +47,33 @@
   };
   // Выбор эффекта
   var setPhotoEffect = function (effect) {
-    for (var i = 0; i < photoEffect.length; i++) {
-      if (effect.includes(photoEffect[i])) {
+    for (var i = 0; i < PHOTO_EFFECTS.length; i++) {
+      if (effect.includes(PHOTO_EFFECTS[i])) {
         if (currentPhotoEffect !== '') {
           photoPreview.classList.remove(currentPhotoEffect);
         }
-        if (photoEffect[i] !== 'effects__preview--none' & currentPhotoEffect === 'effects__preview--none') {
+        if (PHOTO_EFFECTS[i] !== 'effects__preview--none' & currentPhotoEffect === 'effects__preview--none') {
           effectsSlider.classList.remove('hidden');
         }
-        if (photoEffect[i] === 'effects__preview--none') {
+        if (PHOTO_EFFECTS[i] === 'effects__preview--none') {
           effectsSlider.classList.add('hidden');
         }
-        photoPreview.classList.add(photoEffect[i]);
-        currentPhotoEffect = photoEffect[i];
+        photoPreview.classList.add(PHOTO_EFFECTS[i]);
+        currentPhotoEffect = PHOTO_EFFECTS[i];
       }
     }
-    setEffectSaturation(0);
+    setEffectSaturation(100);
   };
   setPhotoEffect('effects__preview--none');
-  var effectPreview = [];
+  var effectPreviews = [];
   for (var i = 0; i < ammountOfEffects; i++) {
-    effectPreview[i] = effects.querySelector('.' + photoEffect[i]);
-    effectPreview[i].addEventListener('click', function (evt) {
+    effectPreviews[i] = effects.querySelector('.' + PHOTO_EFFECTS[i]);
+    effectPreviews[i].addEventListener('click', function (evt) {
       setPhotoEffect(evt.target.classList.value);
     });
   }
   var resetPhoto = function () {
-    setEffectSaturation(0);
+    setEffectSaturation(100);
     setPhotoEffect('effects__preview--none');
   };
 

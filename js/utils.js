@@ -6,14 +6,14 @@
   };
 
   var createRandomArray = function (beginFrom, endOn, length) {
-    var randomArray = [];
-    while (randomArray.length < length) {
+    var randoms = [];
+    while (randoms.length < length) {
       var randomInteger = createRandomInteger(beginFrom, endOn);
-      if (!randomArray.includes(randomInteger)) {
-        randomArray.push(randomInteger);
+      if (!randoms.includes(randomInteger)) {
+        randoms.push(randomInteger);
       }
     }
-    return randomArray;
+    return randoms;
   };
   // Обработчик модальных окон с сообщениями
   var confirmOpened = function (confirm, button) {

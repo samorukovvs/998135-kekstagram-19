@@ -33,6 +33,7 @@
       window.clearTimeout(timoutId);
     }
     timoutId = window.setTimeout(function () {
+      removeGallery();
       var fragmentToRender = fillFragment(photos, templateFrom, ammountOfImages);
       var fragmentPlace = document.querySelector(whereTo);
       fragmentPlace.appendChild(fragmentToRender);
@@ -82,25 +83,21 @@
   };
 
   defaultSortButton.addEventListener('click', function () {
-    removeGallery();
     makeButtonActive(defaultSortButton);
     renderGallery(window.photosMeta, '.pictures', '#picture', DEFAULT_GALLERY_SIZE, window.photoView.findPictures);
   });
 
   randomSortButton.addEventListener('click', function () {
     makeButtonActive(randomSortButton);
-    removeGallery();
     renderRandomGallery();
   });
 
   discussedSortButton.addEventListener('click', function () {
     makeButtonActive(discussedSortButton);
-    removeGallery();
     renderDiscussedGallery();
   });
 
   window.gallery = {
-    DEFAULT_GALLERY_SIZE: DEFAULT_GALLERY_SIZE,
     enableFilter: enableFilter,
     renderGallery: renderGallery,
     removeGallery: removeGallery
