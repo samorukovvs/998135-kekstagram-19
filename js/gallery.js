@@ -98,6 +98,7 @@
   });
 
   window.gallery = {
+    DEFAULT_SIZE: DEFAULT_GALLERY_SIZE,
     enableFilter: enableFilter,
     renderGallery: renderGallery,
     removeGallery: removeGallery

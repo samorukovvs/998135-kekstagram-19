@@ -16,7 +16,7 @@
   var effectPin = document.querySelector('.effect-level__pin');
   var effectValue = document.querySelector('.effect-level__value');
   var effectVisualValueDepth = document.querySelector('.effect-level__depth');
-  var photoPreview = document.querySelector('.img-upload__preview');
+  var photoPreview = document.querySelector('.img-upload__preview').querySelector('img');
 
   var ammountOfEffects = PHOTO_EFFECTS.length;
 
