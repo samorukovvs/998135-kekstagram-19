@@ -3,7 +3,7 @@
   var SYMBOL_REGEX = /^([#])([a-zA-ZА-Яа-я0-9]{1,19})$/;
   var SPEC_SYMBOL = /^([#])([a-zA-ZА-Яа-я0-9]*)$/;
   var hashtagField = document.querySelector('.text__hashtags');
-  var checkHashtags = function () {
+  var onSubmitClick = function () {
     hashtagField.setCustomValidity('');
     // Проверка на пустой хештег
     if (hashtagField.value === '') {
@@ -50,5 +50,6 @@
     }
     return true;
   };
-  document.querySelector('.img-upload__submit').addEventListener('click', checkHashtags);
+
+  document.querySelector('.img-upload__submit').addEventListener('click', onSubmitClick);
 })();

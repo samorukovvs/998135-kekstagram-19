@@ -24,12 +24,16 @@
     body.removeEventListener('keydown', onEscKeyPress);
   };
 
-  var openPhoto = function () {
+  var onCloseClick = function () {
+    closePhoto();
+  };
+
+  var onUploadClick = function () {
     window.photoScale.resetPhotoSize();
     body.classList.add('modal-open');
     editPhotoForm.classList.remove('hidden');
     body.addEventListener('keydown', onEscKeyPress);
-    buttonPhotoClose.addEventListener('click', closePhoto);
+    buttonPhotoClose.addEventListener('click', onCloseClick);
   };
 
   dataForm.addEventListener('submit', function (evt) {
@@ -40,5 +44,5 @@
     });
   });
 
-  uploadFile.addEventListener('change', openPhoto);
+  uploadFile.addEventListener('change', onUploadClick);
 })();

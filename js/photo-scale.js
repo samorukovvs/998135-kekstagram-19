@@ -17,7 +17,7 @@
     photoPreview.style.transform = 'scale(' + transformSize + ')';
   };
 
-  var increaseScaleControl = function () {
+  var onIncreaseScaleClick = function () {
     scaleControlValue += SCALE_FACTOR;
     if (scaleControlValue > SCALE_CONTROL_MAXIMUM) {
       scaleControlValue = SCALE_CONTROL_MAXIMUM;
@@ -27,7 +27,7 @@
     resizePhoto(scaleControlValue);
   };
 
-  var decreaseScaleControl = function () {
+  var onDecreaseScaleClick = function () {
     scaleControlValue -= SCALE_FACTOR;
     if (scaleControlValue < SCALE_CONTROL_MINIMUM) {
       scaleControlValue = SCALE_CONTROL_MINIMUM;
@@ -44,8 +44,8 @@
 
   };
 
-  buttonPhotoBigger.addEventListener('click', increaseScaleControl);
-  buttonPhotoSmaller.addEventListener('click', decreaseScaleControl);
+  buttonPhotoBigger.addEventListener('click', onIncreaseScaleClick);
+  buttonPhotoSmaller.addEventListener('click', onDecreaseScaleClick);
 
   window.photoScale = {
     resetPhotoSize: resetPhotoSize

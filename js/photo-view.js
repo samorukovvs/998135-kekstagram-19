@@ -1,8 +1,15 @@
 'use strict';
 (function () {
   var AMMOUNT_OF_COMMENTS_TO_SHOW = 5;
+  var socialComments = document.querySelector('.social__comments');
+  var commentsLoader = document.querySelector('.comments-loader');
+  var shownCommentsCounter = document.querySelector('.social__comment-count');
   var body = document.querySelector('body');
   var bigPicture = document.querySelector('.big-picture');
+  var bigPictureImage = bigPicture.querySelector('img');
+  var bigPictureDescription = bigPicture.querySelector('.social__caption');
+  var bigPictureLikes = bigPicture.querySelector('.likes-count');
+
   var findPictures = function () {
     var pictures = document.querySelectorAll('.picture__img');
     pictures.forEach(function (picture) {
@@ -30,58 +37,65 @@
     }
   };
 
+  var onCancelClick = function () {
+    closePhoto();
+  };
+  var totalCommentsAmmount;
+  var pictureToShow;
+
   var showBigPicture = function (id) {
-    var pictureToShow = window.gallery.currentGalleryPhotosMeta[id];
+    pictureToShow = window.gallery.currentGalleryPhotosMeta[id];
+
     bigPicture.classList.remove('hidden');
-    bigPicture.querySelector('#picture-cancel').addEventListener('click', closePhoto);
+    bigPicture.querySelector('#picture-cancel').addEventListener('click', onCancelClick);
     body.classList.add('modal-open');
     body.addEventListener('keydown', onEscKeyPress);
     bigPicture.querySelectorAll('.social__comment').forEach(function (comment) {
       comment.remove();
     });
-    var bigPictureImage = bigPicture.querySelector('img');
-    var bigPictureDescription = bigPicture.querySelector('.social__caption');
-    var bigPictureLikes = bigPicture.querySelector('.likes-count');
-    var socialComments = document.querySelector('.social__comments');
-    var commentsLoader = document.querySelector('.comments-loader');
-    var shownCommentsCounter = document.querySelector('.social__comment-count');
 
     bigPictureImage.src = pictureToShow.url;
     bigPictureDescription.textContent = pictureToShow.description;
     bigPictureLikes.textContent = pictureToShow.likes;
 
-    var totalCommentsAmmount = pictureToShow.comments.length;
-    var currentAmmountOfComments = 0;
-
-    var showMoreComments = function () {
-      var currentComment = currentAmmountOfComments;
-      if (pictureToShow.comments.length > (currentAmmountOfComments + AMMOUNT_OF_COMMENTS_TO_SHOW)) {
-        var ammountOfCommentToShowNow = AMMOUNT_OF_COMMENTS_TO_SHOW;
-      } else {
-        ammountOfCommentToShowNow = totalCommentsAmmount - currentAmmountOfComments;
-      }
-      for (currentComment; currentComment < currentAmmountOfComments + ammountOfCommentToShowNow; currentComment++) {
-        var li = document.createElement('li');
-        var img = document.createElement('img');
-        var p = document.createElement('p');
-        li.classList.add('social__comment');
-        img.classList.add('social__picture');
-        img.setAttribute('src', pictureToShow.comments[currentComment].avatar);
-        img.setAttribute('alt', pictureToShow.comments[currentComment].name);
-        img.style.width = 35;
-        img.style.height = 35;
-        p.classList.add('social__text');
-        p.textContent = pictureToShow.comments[currentComment].message;
-        li.appendChild(img);
-        li.appendChild(p);
-        socialComments.appendChild(li);
-      }
-      currentAmmountOfComments = currentComment;
-      shownCommentsCounter.innerHTML = currentAmmountOfComments + ' из ' + totalCommentsAmmount + ' комментариев';
-    };
+    totalCommentsAmmount = pictureToShow.comments.length;
     showMoreComments();
-    commentsLoader.addEventListener('click', showMoreComments);
   };
+  var currentAmmountOfComments = 0;
+
+  var showMoreComments = function () {
+    var currentComment = currentAmmountOfComments;
+    if (pictureToShow.comments.length > (currentAmmountOfComments + AMMOUNT_OF_COMMENTS_TO_SHOW)) {
+      var ammountOfCommentToShowNow = AMMOUNT_OF_COMMENTS_TO_SHOW;
+    } else {
+      ammountOfCommentToShowNow = totalCommentsAmmount - currentAmmountOfComments;
+    }
+    for (currentComment; currentComment < currentAmmountOfComments + ammountOfCommentToShowNow; currentComment++) {
+      var li = document.createElement('li');
+      var img = document.createElement('img');
+      var p = document.createElement('p');
+      li.classList.add('social__comment');
+      img.classList.add('social__picture');
+      img.setAttribute('src', pictureToShow.comments[currentComment].avatar);
+      img.setAttribute('alt', pictureToShow.comments[currentComment].name);
+      img.style.width = 35;
+      img.style.height = 35;
+      p.classList.add('social__text');
+      p.textContent = pictureToShow.comments[currentComment].message;
+      li.appendChild(img);
+      li.appendChild(p);
+      socialComments.appendChild(li);
+    }
+    currentAmmountOfComments = currentComment;
+    shownCommentsCounter.innerHTML = currentAmmountOfComments + ' из ' + totalCommentsAmmount + ' комментариев';
+  };
+
+
+  var onLoadCommentsClick = function () {
+    showMoreComments();
+  };
+
+  commentsLoader.addEventListener('click', onLoadCommentsClick);
 
   window.photoView = {
     showBigPicture: showBigPicture,
