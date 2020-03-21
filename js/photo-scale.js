@@ -39,6 +39,7 @@
 
   var resetPhotoSize = function () {
     scaleControl.value = '100%';
+    scaleControl.setAttribute('value', '100%');
     photoPreview.style.transform = 'scale(1)';
 
   };
