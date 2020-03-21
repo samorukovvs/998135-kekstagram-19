@@ -35,7 +35,7 @@
   window.photosMeta = [];
   var successHandler = function (img) {
     window.photosMeta = img.slice();
-    window.gallery.renderGallery(img, '.pictures', '#picture', window.gallery.DEFAULT_SIZE, window.photoView.findPictures);
+    window.gallery.render(img, '.pictures', '#picture', window.gallery.DEFAULT_SIZE, window.photoView.findPictures);
     window.gallery.enableFilter();
   };
 

@@ -48,7 +48,7 @@
     for (var i = 0; i < randomPicturesIndex.length; i++) {
       randomPictures.push(window.photosMeta[randomPicturesIndex[i]]);
     }
-    window.gallery.renderGallery(randomPictures, '.pictures', '#picture', RANDOM_GALLERY_SIZE, window.photoView.findPictures);
+    window.gallery.render(randomPictures, '.pictures', '#picture', RANDOM_GALLERY_SIZE, window.photoView.findPictures);
 
   };
 
@@ -58,13 +58,13 @@
     discussedPictures.sort(function (img1, img2) {
       if (img1.comments.length > img2.comments.length) {
         return -1;
-      } else if (img1.comments.length < img2.comments.length) {
-        return 1;
-      } else {
-        return 0;
       }
+      if (img1.comments.length < img2.comments.length) {
+        return 1;
+      }
+      return 0;
     });
-    window.gallery.renderGallery(discussedPictures, '.pictures', '#picture', DEFAULT_GALLERY_SIZE, window.photoView.findPictures);
+    window.gallery.render(discussedPictures, '.pictures', '#picture', DEFAULT_GALLERY_SIZE, window.photoView.findPictures);
   };
 
   var removeGallery = function () {
@@ -100,7 +100,6 @@
   window.gallery = {
     DEFAULT_SIZE: DEFAULT_GALLERY_SIZE,
     enableFilter: enableFilter,
-    renderGallery: renderGallery,
-    removeGallery: removeGallery
+    render: renderGallery
   };
 })();
