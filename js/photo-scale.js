@@ -8,7 +8,7 @@
   var buttonPhotoSmaller = editPhotoForm.querySelector('.scale__control--smaller');
   var buttonPhotoBigger = editPhotoForm.querySelector('.scale__control--bigger');
   var scaleControl = editPhotoForm.querySelector('.scale__control--value');
-  var photoPreview = editPhotoForm.querySelector('.img-upload__preview');
+  var photoPreview = editPhotoForm.querySelector('.img-upload__preview').querySelector('img');
   var scaleControlValue = 100;
 
 
