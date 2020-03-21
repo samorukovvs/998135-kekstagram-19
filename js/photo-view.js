@@ -29,6 +29,7 @@
     bigPicture.classList.add('hidden');
     body.classList.remove('modal-open');
     body.removeEventListener('keydown', onEscKeyPress);
+    totalCommentsAmmount = 0;
   };
 
   var onEscKeyPress = function (evt) {
@@ -42,10 +43,10 @@
   };
   var totalCommentsAmmount;
   var pictureToShow;
-
+  var currentAmmountOfComments;
   var showBigPicture = function (id) {
     pictureToShow = window.gallery.currentGalleryPhotosMeta[id];
-
+    currentAmmountOfComments = 0;
     bigPicture.classList.remove('hidden');
     bigPicture.querySelector('#picture-cancel').addEventListener('click', onCancelClick);
     body.classList.add('modal-open');
