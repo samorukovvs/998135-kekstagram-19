@@ -44,6 +44,7 @@
   var totalCommentsAmmount;
   var pictureToShow;
   var currentAmmountOfComments;
+
   var showBigPicture = function (id) {
     pictureToShow = window.gallery.currentGalleryPhotosMeta[id];
     currentAmmountOfComments = 0;
@@ -58,11 +59,9 @@
     bigPictureImage.src = pictureToShow.url;
     bigPictureDescription.textContent = pictureToShow.description;
     bigPictureLikes.textContent = pictureToShow.likes;
-
     totalCommentsAmmount = pictureToShow.comments.length;
     showMoreComments();
   };
-  var currentAmmountOfComments = 0;
 
   var showMoreComments = function () {
     var currentComment = currentAmmountOfComments;
